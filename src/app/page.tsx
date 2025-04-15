@@ -217,30 +217,10 @@ useEffect(() => {
             <div className="grid grid-cols-11 gap-2 text-center">
               <div></div>
               {Array.from({length: 10}, (_, i) => (
-                
-                 
-                  
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                     
-                  
-                
-                
-                  
-                
+                 <div key={i} className="text-center">
+                    
+                </div>
               ))}
-               
-                
-                   
-                
-               
             </div>
 
             <div className="grid gap-4 relative">
@@ -260,7 +240,6 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -269,7 +248,6 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -296,7 +274,6 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -305,7 +282,6 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -322,7 +298,6 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -331,7 +306,6 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                    
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -369,5 +343,3 @@ useEffect(() => {
     </div>
   );
 }
-
-
