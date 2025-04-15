@@ -249,14 +249,6 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                      <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
-                      />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -294,14 +286,6 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                      <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
-                      />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -328,14 +312,6 @@ useEffect(() => {
                          min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
-                      />
-                      <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
                       />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
@@ -374,3 +350,4 @@ useEffect(() => {
     </div>
   );
 }
+
