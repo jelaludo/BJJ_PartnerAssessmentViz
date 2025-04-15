@@ -82,11 +82,11 @@ export default function Home() {
 
   const handleSliderChange = (
     attribute: keyof AssessmentData,
-    value: number[],
+    value: number,
   ) => {
     setAssessmentData(prevData => ({
       ...prevData,
-      [attribute]: value[0],
+      [attribute]: value,
     }));
   };
 
@@ -218,9 +218,10 @@ useEffect(() => {
               <div></div>
               {Array.from({length: 10}, (_, i) => (
                  <div key={i} className="text-center">
-                    
+                  {i+1}
                 </div>
               ))}
+               <div>10</div>
             </div>
 
             <div className="grid gap-4 relative">
@@ -247,6 +248,14 @@ useEffect(() => {
                         min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
+                      />
+                      <div
+                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
+                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
+                        style={{
+                          left: `${(value-1) * 100 / 9}%`,
+                          top: '50%',
+                        }}
                       />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
@@ -282,6 +291,14 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                       <div
+                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
+                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
+                        style={{
+                          left: `${(value-1) * 100 / 9}%`,
+                          top: '50%',
+                        }}
+                      />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -305,6 +322,14 @@ useEffect(() => {
                          min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
+                      />
+                       <div
+                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
+                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
+                        style={{
+                          left: `${(value-1) * 100 / 9}%`,
+                          top: '50%',
+                        }}
                       />
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
