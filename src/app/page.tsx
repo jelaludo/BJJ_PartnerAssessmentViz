@@ -228,7 +228,7 @@ useEffect(() => {
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
                   <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start">
+                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -272,7 +272,7 @@ useEffect(() => {
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
                   <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start">
+                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -306,7 +306,7 @@ useEffect(() => {
                 .filter(([key]) => ['hygiene', 'reliability', 'constitution'].includes(key))
                 .map(([attribute, value]: [string, number]) => (
                   <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start">
+                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -365,4 +365,3 @@ useEffect(() => {
     </div>
   );
 }
-
