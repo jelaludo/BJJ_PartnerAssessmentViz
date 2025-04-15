@@ -217,8 +217,30 @@ useEffect(() => {
             <div className="grid grid-cols-11 gap-2 text-center">
               <div></div>
               {Array.from({length: 10}, (_, i) => (
-                <div key={i + 1}>{i + 1}</div>
+                
+                 
+                  
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                  
+                
+                
+                  
+                
               ))}
+               
+                
+                   
+                
+               
             </div>
 
             <div className="grid gap-4 relative">
@@ -255,7 +277,7 @@ useEffect(() => {
             </div>
 
             <div className="grid gap-4 relative">
-              <h2 className="font-semibold text-lg text-primary">Mindset &amp; Attitude</h2>
+              <h2 className="font-semibold text-lg text-primary">Mindset &amp;amp; Attitude</h2>
               {Object.entries(assessmentData)
                 .filter(([key]) => [
                   'controlledEgo',
@@ -347,3 +369,5 @@ useEffect(() => {
     </div>
   );
 }
+
+
