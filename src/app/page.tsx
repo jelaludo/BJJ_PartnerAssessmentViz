@@ -238,9 +238,7 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      <div
-                        className={`absolute top-1/2 left-0 w-full h-1 transform -translate-y-1/2 rounded-full ${getColorClass(value)}`}
-                      />
+                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -275,9 +273,7 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      <div
-                        className={`absolute top-1/2 left-0 w-full h-1 transform -translate-y-1/2 rounded-full ${getColorClass(value)}`}
-                      />
+                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -302,9 +298,7 @@ useEffect(() => {
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
-                      <div
-                        className={`absolute top-1/2 left-0 w-full h-1 transform -translate-y-1/2 rounded-full ${getColorClass(value)}`}
-                      />
+                      
                       <Slider
                         id={attribute}
                         defaultValue={[value]}
@@ -350,4 +344,5 @@ useEffect(() => {
     </div>
   );
 }
+
 
