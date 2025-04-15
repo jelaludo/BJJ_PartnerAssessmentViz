@@ -247,6 +247,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -282,6 +283,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -307,6 +309,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                    
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -344,5 +347,3 @@ useEffect(() => {
     </div>
   );
 }
-
-
