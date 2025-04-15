@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {
   Card,
   CardContent,
@@ -49,6 +49,7 @@ interface AssessmentData {
   identifyWeaknesses: number;
   hygiene: number;
   reliability: number;
+  constitution: number; // Robust/Frail Constitution
 }
 
 const initialAssessmentData: AssessmentData = {
@@ -69,6 +70,7 @@ const initialAssessmentData: AssessmentData = {
   identifyWeaknesses: 0,
   hygiene: 0,
   reliability: 0,
+  constitution: 0, // Robust/Frail Constitution
 };
 
 export default function Home() {
@@ -116,6 +118,7 @@ export default function Home() {
       identifyWeaknesses: Math.floor(Math.random() * 10) + 1,
       hygiene: Math.floor(Math.random() * 10) + 1,
       reliability: Math.floor(Math.random() * 10) + 1,
+      constitution: Math.floor(Math.random() * 10) + 1, // Robust/Frail Constitution
     };
     setAssessmentData(newAssessmentData);
   };
@@ -123,6 +126,61 @@ export default function Home() {
   const resetScores = () => {
     setAssessmentData(initialAssessmentData);
   };
+
+  // Function to calculate dot positions based on attribute scores
+  const calculateDotPositions = () => {
+    const dotPositions: { [key: string]: { x: number; y: number } } = {};
+
+    Object.entries(assessmentData).forEach(([attribute, value]) => {
+      const sliderElement = document.getElementById(attribute);
+      if (sliderElement) {
+        const sliderRect = sliderElement.getBoundingClientRect();
+        const dotX = sliderRect.left + (sliderRect.width * value) / 10; // Calculate X position
+        const dotY = sliderRect.top + sliderRect.height / 2; // Y position at the center of the slider
+        dotPositions[attribute] = {x: dotX, y: dotY};
+      }
+    });
+
+    return dotPositions;
+  };
+
+  // State to store dot positions
+  const [dotPositions, setDotPositions] = useState<{ [key: string]: { x: number; y: number } }>({});
+
+  // Recalculate dot positions whenever assessmentData changes
+  useEffect(() => {
+    setDotPositions(calculateDotPositions());
+  }, [assessmentData]);
+
+  // Function to generate connector lines
+  const generateConnectorLines = () => {
+    const attributes = Object.keys(assessmentData);
+    const lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
+
+    for (let i = 0; i < attributes.length - 1; i++) {
+      const attribute1 = attributes[i];
+      const attribute2 = attributes[i + 1];
+
+      if (dotPositions[attribute1] && dotPositions[attribute2]) {
+        lines.push({
+          x1: dotPositions[attribute1].x,
+          y1: dotPositions[attribute1].y,
+          x2: dotPositions[attribute2].x,
+          y2: dotPositions[attribute2].y,
+        });
+      }
+    }
+
+    return lines;
+  };
+
+  // Connector lines state
+  const [connectorLines, setConnectorLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+
+  // Update connector lines when dot positions change
+  useEffect(() => {
+    setConnectorLines(generateConnectorLines());
+  }, [dotPositions]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
@@ -183,7 +241,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 relative"> {/* Making container relative */}
               <h2 className="font-semibold text-lg text-primary">Technical Attributes</h2>
               {Object.entries(assessmentData)
                 .filter(([key]) => [
@@ -195,24 +253,35 @@ export default function Home() {
                   'specificWork',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">  {/* Making each row relative */}
                     <Label htmlFor={attribute} className="col-span-4 justify-self-start">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6">
                       <Slider
+                        id={attribute}
                         defaultValue={[value]}
                         max={10}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                      {/* Dot Display */}
+                      {dotPositions[attribute] && (
+                        <div
+                          className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
+                          style={{
+                            left: `${value * 10}%`,  // Position using the slider value
+                            top: '50%',                // Center the dot vertically
+                          }}
+                        />
+                      )}
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
                 ))}
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 relative">
               <h2 className="font-semibold text-lg text-primary">Mindset &amp; Attitude</h2>
               {Object.entries(assessmentData)
                 .filter(([key]) => [
@@ -227,44 +296,81 @@ export default function Home() {
                   'identifyWeaknesses',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
                     <Label htmlFor={attribute} className="col-span-4 justify-self-start">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6">
                       <Slider
+                        id={attribute}
                         defaultValue={[value]}
                         max={10}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                      {/* Dot Display */}
+                      {dotPositions[attribute] && (
+                        <div
+                          className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
+                          style={{
+                            left: `${value * 10}%`,  // Position using the slider value
+                            top: '50%',                // Center the dot vertically
+                          }}
+                        />
+                      )}
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
                 ))}
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 relative">
               <h2 className="font-semibold text-lg text-primary">Others</h2>
               {Object.entries(assessmentData)
-                .filter(([key]) => ['hygiene', 'reliability'].includes(key))
+                .filter(([key]) => ['hygiene', 'reliability', 'constitution'].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
                     <Label htmlFor={attribute} className="col-span-4 justify-self-start">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6">
                       <Slider
+                        id={attribute}
                         defaultValue={[value]}
                         max={10}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
+                      {/* Dot Display */}
+                      {dotPositions[attribute] && (
+                        <div
+                          className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
+                          style={{
+                            left: `${value * 10}%`,  // Position using the slider value
+                            top: '50%',                // Center the dot vertically
+                          }}
+                        />
+                      )}
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
                 ))}
             </div>
+
+            {/* Connector Lines */}
+            <svg className="absolute inset-0 pointer-events-none">
+              {connectorLines.map((line, index) => (
+                <line
+                  key={index}
+                  x1={line.x1}
+                  y1={line.y1}
+                  x2={line.x2}
+                  y2={line.y2}
+                  stroke="rgba(44, 62, 80, 0.5)"
+                  strokeWidth="2"
+                />
+              ))}
+            </svg>
 
             <div className="flex space-x-4">
               <Button onClick={generateRandomScores}>Generate Random Scores</Button>
