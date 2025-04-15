@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/card';
 import {Label} from '@/components/ui/label';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {Slider} from '@/components/ui/slider';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/hooks/use-toast';
 
@@ -78,7 +77,7 @@ export default function Home() {
     useState<AssessmentData>(initialAssessmentData);
   const [selectedPartner, setSelectedPartner] = useState<string>('');
   const {toast} = useToast();
-    const sliderRefs = useRef<Record<keyof AssessmentData, HTMLDivElement>>({});
+  const sliderRefs = useRef<Record<keyof AssessmentData, HTMLDivElement>>({});
 
   const handleSliderChange = (
     attribute: keyof AssessmentData,
@@ -128,7 +127,7 @@ export default function Home() {
     setAssessmentData(initialAssessmentData);
   };
 
-    const getColorClass = (value: number): string => {
+  const getColorClass = (value: number): string => {
     if (value <= 3) {
       return 'bg-red-500'; // Low score
     } else if (value <= 7) {
@@ -138,44 +137,54 @@ export default function Home() {
     }
   };
 
-    const calculateDotPosition = (attribute: keyof AssessmentData): { x: number; y: number } | null => {
+  const calculateDotPosition = (attribute: keyof AssessmentData): { x: number; y: number } | null => {
     const sliderElement = sliderRefs.current[attribute];
     if (!sliderElement) {
-        return null;
+      return null;
     }
 
     const sliderRect = sliderElement.getBoundingClientRect();
     const value = assessmentData[attribute];
     const dotX = sliderRect.left + (sliderRect.width * (value - 1)) / 9;
     const dotY = sliderRect.top + sliderRect.height / 2;
-    return { x: dotX, y: dotY };
-};
+    return {x: dotX, y: dotY};
+  };
 
-const [connectorLines, setConnectorLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
+  const [connectorLines, setConnectorLines] = useState<{ x1: number; y1: number; x2: number; y2: number }[]>([]);
 
-useEffect(() => {
+  useEffect(() => {
     const attributes = Object.keys(assessmentData) as (keyof AssessmentData)[];
     const newConnectorLines: { x1: number; y1: number; x2: number; y2: number }[] = [];
 
     for (let i = 0; i < attributes.length - 1; i++) {
-        const attribute1 = attributes[i];
-        const attribute2 = attributes[i + 1];
+      const attribute1 = attributes[i];
+      const attribute2 = attributes[i + 1];
 
-        const pos1 = calculateDotPosition(attribute1);
-        const pos2 = calculateDotPosition(attribute2);
+      const pos1 = calculateDotPosition(attribute1);
+      const pos2 = calculateDotPosition(attribute2);
 
-        if (pos1 && pos2) {
-            newConnectorLines.push({
-                x1: pos1.x,
-                y1: pos1.y,
-                x2: pos2.x,
-                y2: pos2.y,
-            });
-        }
+      if (pos1 && pos2) {
+        newConnectorLines.push({
+          x1: pos1.x,
+          y1: pos1.y,
+          x2: pos2.x,
+          y2: pos2.y,
+        });
+      }
     }
 
     setConnectorLines(newConnectorLines);
-}, [assessmentData]);
+  }, [assessmentData]);
+
+  const getBarColorClass = (value: number): string => {
+    if (value <= 3) {
+      return 'bg-red-200';
+    } else if (value <= 7) {
+      return 'bg-yellow-200';
+    } else {
+      return 'bg-green-200';
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
@@ -214,7 +223,13 @@ useEffect(() => {
               </Select>
             </div>
 
-            
+            <div className="grid grid-cols-11 gap-2 items-center mb-4">
+              <div></div>
+              {[...Array(10)].map((_, index) => (
+                <div key={index} className="text-center text-xs">{index + 1}</div>
+              ))}
+              <div>Score</div>
+            </div>
 
             <div className="grid gap-4 relative">
               <h2 className="font-semibold text-lg text-primary">Technical Attributes</h2>
@@ -228,20 +243,15 @@ useEffect(() => {
                   'specificWork',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
                     <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
-                    <div className="col-span-6 relative">
-                      <Slider
-                        id={attribute}
-                        defaultValue={[value]}
-                        max={10}
-                        min={1}
-                        step={1}
-                        onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
-                         
-                      />
+                    <div className="col-span-7 h-4 rounded-md overflow-hidden">
+                      <div
+                        className={`h-full ${getBarColorClass(value)}`}
+                        style={{width: `${(value / 10) * 100}%`}}
+                      ></div>
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -263,19 +273,15 @@ useEffect(() => {
                   'identifyWeaknesses',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
                     <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
-                    <div className="col-span-6 relative">
-                      <Slider
-                        id={attribute}
-                        defaultValue={[value]}
-                        max={10}
-                         min={1}
-                        step={1}
-                        onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
-                      />
+                    <div className="col-span-7 h-4 rounded-md overflow-hidden">
+                      <div
+                        className={`h-full ${getBarColorClass(value)}`}
+                        style={{width: `${(value / 10) * 100}%`}}
+                      ></div>
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -287,39 +293,20 @@ useEffect(() => {
               {Object.entries(assessmentData)
                 .filter(([key]) => ['hygiene', 'reliability', 'constitution'].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
                     <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
-                    <div className="col-span-6 relative">
-                      <Slider
-                        id={attribute}
-                        defaultValue={[value]}
-                        max={10}
-                         min={1}
-                        step={1}
-                        onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
-                      />
+                    <div className="col-span-7 h-4 rounded-md overflow-hidden">
+                      <div
+                        className={`h-full ${getBarColorClass(value)}`}
+                        style={{width: `${(value / 10) * 100}%`}}
+                      ></div>
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
                 ))}
             </div>
-
-            {/* Connector Lines */}
-            <svg className="absolute inset-0 pointer-events-none">
-                {connectorLines.map((line, index) => (
-                    <line
-                        key={index}
-                        x1={line.x1}
-                        y1={line.y1}
-                        x2={line.x2}
-                        y2={line.y2}
-                        stroke="rgba(44, 62, 80, 0.5)"
-                        strokeWidth="1"
-                    />
-                ))}
-            </svg>
 
             <div className="flex space-x-4">
               <Button onClick={generateRandomScores}>Generate Random Scores</Button>
