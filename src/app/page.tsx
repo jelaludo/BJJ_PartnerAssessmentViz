@@ -129,13 +129,7 @@ export default function Home() {
   };
 
     const getColorClass = (value: number): string => {
-    if (value >= 8) {
-      return 'bg-green-200';
-    } else if (value >= 4) {
-      return 'bg-yellow-200';
-    } else {
-      return 'bg-red-200';
-    }
+    return '';
   };
 
     const calculateDotPosition = (attribute: keyof AssessmentData): { x: number; y: number } | null => {
@@ -212,21 +206,6 @@ useEffect(() => {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-
-            <div className="flex justify-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <span className="w-4 h-4 bg-red-400"/>
-                <span>Needs Work (1-3)</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-4 h-4 bg-yellow-400"/>
-                <span>Developing (4-7)</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-4 h-4 bg-green-400"/>
-                <span>Excellent (8-10)</span>
-              </div>
             </div>
 
             <div className="grid grid-cols-11 gap-2 text-center">
@@ -386,3 +365,4 @@ useEffect(() => {
     </div>
   );
 }
+
