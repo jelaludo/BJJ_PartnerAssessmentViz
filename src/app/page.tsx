@@ -214,15 +214,7 @@ useEffect(() => {
               </Select>
             </div>
 
-            <div className="grid grid-cols-11 gap-2 text-center">
-              <div></div>
-              {Array.from({length: 10}, (_, i) => (
-                 <div key={i} className="text-center">
-                  {i+1}
-                </div>
-              ))}
-               <div>10</div>
-            </div>
+            
 
             <div className="grid gap-4 relative">
               <h2 className="font-semibold text-lg text-primary">Technical Attributes</h2>
@@ -236,8 +228,8 @@ useEffect(() => {
                   'specificWork',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
+                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                    <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -249,14 +241,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                      <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
-                      />
+                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -278,8 +263,8 @@ useEffect(() => {
                   'identifyWeaknesses',
                 ].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
+                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                    <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -291,14 +276,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                       <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
-                      />
+                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -310,8 +288,8 @@ useEffect(() => {
               {Object.entries(assessmentData)
                 .filter(([key]) => ['hygiene', 'reliability', 'constitution'].includes(key))
                 .map(([attribute, value]: [string, number]) => (
-                  <div key={attribute} className="grid grid-cols-11 gap-2 items-center relative">
-                    <Label htmlFor={attribute} className="col-span-4 justify-self-start uppercase">
+                  <div key={attribute} className="grid grid-cols-10 gap-2 items-center relative">
+                    <Label htmlFor={attribute} className="col-span-3 justify-self-start uppercase">
                       {attribute.replace(/([A-Z])/g, ' $1')}
                     </Label>
                     <div className="col-span-6 relative">
@@ -323,14 +301,7 @@ useEffect(() => {
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
-                       <div
-                        ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
-                        className="absolute w-2 h-2 rounded-full bg-gray-800 transform -translate-y-1/2"
-                        style={{
-                          left: `${(value-1) * 100 / 9}%`,
-                          top: '50%',
-                        }}
-                      />
+                     
                     </div>
                     <div className="col-span-1 text-center">{value}</div>
                   </div>
@@ -368,3 +339,4 @@ useEffect(() => {
     </div>
   );
 }
+
