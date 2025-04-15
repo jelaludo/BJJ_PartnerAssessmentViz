@@ -129,7 +129,13 @@ export default function Home() {
   };
 
     const getColorClass = (value: number): string => {
-    return '';
+    if (value <= 3) {
+      return 'bg-red-500'; // Low score
+    } else if (value <= 7) {
+      return 'bg-yellow-500'; // Medium score
+    } else {
+      return 'bg-green-500'; // High score
+    }
   };
 
     const calculateDotPosition = (attribute: keyof AssessmentData): { x: number; y: number } | null => {
@@ -140,7 +146,7 @@ export default function Home() {
 
     const sliderRect = sliderElement.getBoundingClientRect();
     const value = assessmentData[attribute];
-    const dotX = sliderRect.left + (sliderRect.width * value) / 10;
+    const dotX = sliderRect.left + (sliderRect.width * (value - 1)) / 9;
     const dotY = sliderRect.top + sliderRect.height / 2;
     return { x: dotX, y: dotY };
 };
@@ -239,6 +245,7 @@ useEffect(() => {
                         id={attribute}
                         defaultValue={[value]}
                         max={10}
+                        min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
@@ -246,7 +253,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${(value-1) * 10}%`,
+                          left: `${(value-1) * 100 / 9}%`,
                           top: '50%',
                         }}
                       />
@@ -283,6 +290,7 @@ useEffect(() => {
                         id={attribute}
                         defaultValue={[value]}
                         max={10}
+                         min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
@@ -290,7 +298,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${(value-1) * 10}%`,
+                          left: `${(value-1) * 100 / 9}%`,
                           top: '50%',
                         }}
                       />
@@ -317,6 +325,7 @@ useEffect(() => {
                         id={attribute}
                         defaultValue={[value]}
                         max={10}
+                         min={1}
                         step={1}
                         onValueChange={(val) => handleSliderChange(attribute as keyof AssessmentData, val)}
                       />
@@ -324,7 +333,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${(value-1) * 10}%`,
+                          left: `${(value-1) * 100 / 9}%`,
                           top: '50%',
                         }}
                       />
@@ -344,7 +353,7 @@ useEffect(() => {
                         x2={line.x2}
                         y2={line.y2}
                         stroke="rgba(44, 62, 80, 0.5)"
-                        strokeWidth="2"
+                        strokeWidth="1"
                     />
                 ))}
             </svg>
