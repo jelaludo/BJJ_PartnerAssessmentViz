@@ -53,24 +53,24 @@ interface AssessmentData {
 }
 
 const initialAssessmentData: AssessmentData = {
-  controlledMovements: 0,
-  controlledSubmissions: 0,
-  modularIntensity: 0,
-  depthOfKnowledge: 0,
-  injuryKnowledge: 0,
-  specificWork: 0,
-  controlledEgo: 0,
-  friendlyAttitude: 0,
-  rdMindset: 0,
-  notOvertalking: 0,
-  communicative: 0,
-  feedbackReceptivity: 0,
-  safetyConsciousness: 0,
-  recoveryAwareness: 0,
-  identifyWeaknesses: 0,
-  hygiene: 0,
-  reliability: 0,
-  constitution: 0, // Robust/Frail Constitution
+  controlledMovements: 1,
+  controlledSubmissions: 1,
+  modularIntensity: 1,
+  depthOfKnowledge: 1,
+  injuryKnowledge: 1,
+  specificWork: 1,
+  controlledEgo: 1,
+  friendlyAttitude: 1,
+  rdMindset: 1,
+  notOvertalking: 1,
+  communicative: 1,
+  feedbackReceptivity: 1,
+  safetyConsciousness: 1,
+  recoveryAwareness: 1,
+  identifyWeaknesses: 1,
+  hygiene: 1,
+  reliability: 1,
+  constitution: 1, // Robust/Frail Constitution
 };
 
 export default function Home() {
@@ -246,7 +246,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${value * 10}%`,
+                          left: `${(value-1) * 10}%`,
                           top: '50%',
                         }}
                       />
@@ -290,7 +290,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${value * 10}%`,
+                          left: `${(value-1) * 10}%`,
                           top: '50%',
                         }}
                       />
@@ -324,7 +324,7 @@ useEffect(() => {
                         ref={el => (sliderRefs.current[attribute as keyof AssessmentData] = el)}
                         className="absolute w-3 h-3 rounded-full bg-gray-800 transform -translate-y-1/2"
                         style={{
-                          left: `${value * 10}%`,
+                          left: `${(value-1) * 10}%`,
                           top: '50%',
                         }}
                       />
